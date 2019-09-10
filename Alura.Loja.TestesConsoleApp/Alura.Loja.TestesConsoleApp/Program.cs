@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,27 +14,99 @@ namespace Alura.Loja.TestesConsoleApp
     {
         static void Main(string[] args)
         {
+			using (var repo = new LojaContext())
+			{
 
-			//GravarAdo();
-			GravarUsandoEntity();
+				var produtos = repo.Produtos.ToList();
+				foreach (var item in produtos)
+				{
+					Console.WriteLine(item);
+				}
 
-            Console.WriteLine("Comando executado");
+				Produto p = new Produto()
+				{
+					Nome = "stollen",
+					Categoria = "Ação",
+					Preco = 1.76
+				};
+
+				repo.Add(p);
+				ExibirEntries(repo.ChangeTracker.Entries());
+
+				//Console.WriteLine("====--====--====--====");
+				//foreach (var item in repo.ChangeTracker.Entries())
+				//{
+				//	Console.WriteLine(item.State);
+				//}
+			}
+
+
+            Console.WriteLine("\n\nComando executado");
             Console.ReadKey();
         }
+
+		//Entity entry é a entidade de entrada capturada no caso produto
+		private static void ExibirEntries(IEnumerable<EntityEntry> entry)
+		{
+			Console.WriteLine("=================================");
+			foreach (var item in entry)
+			{
+				Console.WriteLine(item.Entity.ToString() +" - "+ item.State);
+			}
+		}
+
+		private static void RecuperaProdutos()
+		{
+			using (var repo = new ProdutoDaoEntity())
+			{
+				var produtos = repo.Produtos();
+				foreach (var item in produtos)
+				{
+					Console.WriteLine($"Nome do produto: {item.Nome}");
+				}
+			}
+		}
 
 		private static void GravarUsandoEntity()
 		{
 			Produto p = new Produto()
 			{
-				Nome = "Sabão em póo",
+				Nome = "Sabão em pó",
 				Categoria = "Limpeza",
 				Preco = 2.49
 			};
 
-			using (var contexto = new LojaContext())
+			using (var repo = new ProdutoDaoEntity())
 			{
-				contexto.Produtos.Add(p);
-				contexto.SaveChanges();
+				repo.Adicionar(p);
+			}
+		}
+
+		private static void AtualizarProduto()
+		{
+			GravarUsandoEntity();
+			RecuperaProdutos();
+
+			using (var repo = new ProdutoDaoEntity())
+			{
+				var p = repo.Produtos().First();
+				p.Nome = "Produto Editado";
+				repo.Atualizar(p);
+			}
+			Console.WriteLine("---Nome foi editado----");
+			RecuperaProdutos();
+
+		}
+
+		private static void ExcluirProdutos()
+		{
+			using (var repo = new ProdutoDaoEntity())
+			{
+				List<Produto> lista = repo.Produtos();
+				foreach (var item in lista)
+				{
+					repo.Remover(item);
+				}
 			}
 		}
 

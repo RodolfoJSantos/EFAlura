@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Alura.Loja.TestesConsoleApp
 {
-    public class ProdutoDao : IDisposable
+    public class ProdutoDao : IDisposable, IProdutoDao
     {
         public void Dispose()
         {
@@ -25,7 +25,7 @@ namespace Alura.Loja.TestesConsoleApp
         }
 
         //Adicionar
-        internal void Adicionar(Produto p)
+        public void Adicionar(Produto p)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace Alura.Loja.TestesConsoleApp
         }
 
         //Atualizar
-        internal void Atualizar(Produto p)
+        public void Atualizar(Produto p)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace Alura.Loja.TestesConsoleApp
         }
 
         //Deletar
-        internal void Deletar(Produto p)
+        public void Remover(Produto p)
         {
             try
             {
@@ -97,7 +97,7 @@ namespace Alura.Loja.TestesConsoleApp
         }
 
         //Selecionar
-        internal List<Produto> ListarProdutos()
+        public List<Produto> Produtos()
         {
             var listaProdutos = new List<Produto>();
             try
