@@ -11,14 +11,30 @@ namespace Alura.Loja.TestesConsoleApp
         static void Main(string[] args)
         {
 
-
-            GravarAdo();
+			//GravarAdo();
+			GravarUsandoEntity();
 
             Console.WriteLine("Comando executado");
             Console.ReadKey();
         }
 
-        static void GravarAdo()
+		private static void GravarUsandoEntity()
+		{
+			Produto p = new Produto()
+			{
+				Nome = "Sabão em póo",
+				Categoria = "Limpeza",
+				Preco = 2.49
+			};
+
+			using (var contexto = new LojaContext())
+			{
+				contexto.Produtos.Add(p);
+				contexto.SaveChanges();
+			}
+		}
+
+		static void GravarAdo()
         {
             Produto p = new Produto()
             {

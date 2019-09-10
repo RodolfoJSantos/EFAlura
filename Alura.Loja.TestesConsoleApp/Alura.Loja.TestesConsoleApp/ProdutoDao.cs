@@ -20,7 +20,6 @@ namespace Alura.Loja.TestesConsoleApp
 		private readonly string strconexao = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=LojaDB;Integrated Security=True";
         public ProdutoDao()
         {
-
             this.conexao = new SqlConnection(strconexao);
             this.conexao.Open();
         }
