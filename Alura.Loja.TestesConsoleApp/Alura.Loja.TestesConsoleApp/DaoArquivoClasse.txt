@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Alura.Loja.TestesConsoleApp
-{
-    public class ProdutoDao : IDisposable
+public class ProdutoDao : IDisposable
     {
         public void Dispose()
         {
@@ -46,6 +36,10 @@ namespace Alura.Loja.TestesConsoleApp
             {
                 throw new SystemException(e.Message, e);
             }
+            finally
+            {
+                Dispose();
+            }
         }
 
         //Atualizar
@@ -74,6 +68,10 @@ namespace Alura.Loja.TestesConsoleApp
             {
                 throw new SystemException(e.Message, e);
             }
+            finally
+            {
+                Dispose();
+            }
         }
 
         //Deletar
@@ -92,6 +90,10 @@ namespace Alura.Loja.TestesConsoleApp
             catch (Exception e)
             {
                 throw new SystemException(e.Message, e);
+            }
+            finally
+            {
+                Dispose();
             }
         }
 
@@ -123,7 +125,39 @@ namespace Alura.Loja.TestesConsoleApp
             {
                 throw new SystemException(e.Message, e);
             }
-
+            finally
+            {
+                Dispose();
+            }
         }
     }
-}
+	
+	
+	Exemplo de uso
+	
+	 class Program
+    {
+        static void Main(string[] args)
+        {
+
+
+            GravarAdo();
+
+            Console.WriteLine("Comando executado");
+            Console.ReadKey();
+        }
+
+        static void GravarAdo()
+        {
+            Produto p = new Produto()
+            {
+                Nome = "Herry Potter",
+                Categoria = "Fixão",
+                Preco = 19.59
+            };
+            using (var repo = new ProdutoDao())
+            {
+                repo.Adicionar(p);
+            }
+        }
+    }

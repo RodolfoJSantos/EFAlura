@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,24 +12,45 @@ namespace Alura.Loja.TestesConsoleApp
         static void Main(string[] args)
         {
 
+            using (var contexto = new LojaContext())
+            {
 
-            GravarAdo();
+                //Select nos produtos
+                var produtos = contexto.Produtos.ToList();
 
-            Console.WriteLine("Comando executado");
+                //recupera ass entidades do contexto
+                ExibeEntries(contexto.ChangeTracker.Entries());
+
+
+                ////Adicionou um novo produto
+                //var novoProduto = new Produto()
+                //{
+                //    Nome = "Desinfetante",
+                //    Categoria = "Limpeza",
+                //    Preco = 1.99
+                //};
+
+                //contexto.Produtos.Add(novoProduto);
+
+                var p1 = produtos.First();
+                contexto.Produtos.Remove(p1);
+
+                ExibeEntries(contexto.ChangeTracker.Entries());
+                contexto.SaveChanges();
+                ExibeEntries(contexto.ChangeTracker.Entries());
+
+                var entry = contexto.Entry(p1);
+                Console.WriteLine("\n\n"+ entry.Entity.ToString() +" - "+ entry.State);
+            }
             Console.ReadKey();
         }
 
-        static void GravarAdo()
+        private static void ExibeEntries(IEnumerable<EntityEntry> entries)
         {
-            Produto p = new Produto()
+            Console.WriteLine("=====================");
+            foreach (var item in entries)
             {
-                Nome = "Herry Potter",
-                Categoria = "Fixão",
-                Preco = 19.59
-            };
-            using (var repo = new ProdutoDao())
-            {
-                repo.Adicionar(p);
+                Console.WriteLine(item.Entity.ToString() + " - " + item.State);
             }
         }
     }
