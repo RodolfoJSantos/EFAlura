@@ -1,0 +1,7 @@
+CREATE TABLE [dbo].[PRODUTOS](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Nome] [nvarchar](max) NULL,
+	[Categoria] [nvarchar](max) NULL,
+	[Preco] [float] NULL,
+ CONSTRAINT [Pk_Produtos] PRIMARY KEY ([Id])
+ );

@@ -16,10 +16,12 @@ namespace Alura.Loja.TestesConsoleApp
         }
 
         private IDbConnection conexao;
-
+		///private readonly string strconexao = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=LojaDB;Integrated Security=True;Pooling=False";
+		private readonly string strconexao = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=LojaDB;Integrated Security=True";
         public ProdutoDao()
         {
-            this.conexao = new SqlConnection("Data Source=DESKTOP-IJL9EC0;Initial Catalog=LojaDB;Integrated Security=True;Pooling=False");
+
+            this.conexao = new SqlConnection(strconexao);
             this.conexao.Open();
         }
 
