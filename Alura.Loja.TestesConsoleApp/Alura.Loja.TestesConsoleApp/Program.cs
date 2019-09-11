@@ -14,9 +14,38 @@ namespace Alura.Loja.TestesConsoleApp
     {
         static void Main(string[] args)
         {
+            //Compra de 6 pães franceses
+            var paoFrances = new Produto();
+            paoFrances.Nome = "Pão Francês";
+            paoFrances.PrecoUnitario = 0.40;
+            paoFrances.Unidade = "Unidade";
+            paoFrances.Categoria = "Padaria";
 
-            Console.WriteLine("\n\nComando executado");
+            var compra = new Compra();
+            compra.Quantidade = 6;
+            compra.Produto = paoFrances;
+            compra.Preco = paoFrances.PrecoUnitario * compra.Quantidade;
+
+            using (var contexto = new LojaContext())
+            {
+                contexto.Compras.Add(compra);
+
+                ExibeEntries(contexto.ChangeTracker.Entries());
+                contexto.SaveChanges();
+                ExibeEntries(contexto.ChangeTracker.Entries());
+
+
+            }
             Console.ReadKey();
         }
+
+        private static void ExibeEntries(IEnumerable<EntityEntry> entries)
+        {
+            foreach (var e in entries)
+            {
+                Console.WriteLine(e.Entity.ToString() +" - "+ e.State);
+            }
+        }
+       
     }
 }

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Alura.Loja.TestesConsoleApp.Migrations
 {
     [DbContext(typeof(LojaContext))]
-    [Migration("20190910204401_Unidade")]
-    partial class Unidade
+    [Migration("20190911012612_Compra")]
+    partial class Compra
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,6 +19,25 @@ namespace Alura.Loja.TestesConsoleApp.Migrations
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Alura.Loja.TestesConsoleApp.Compra", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("Preco");
+
+                    b.Property<int>("ProdutoId");
+
+                    b.Property<int>("Quantidade");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProdutoId");
+
+                    b.ToTable("Compras");
+                });
 
             modelBuilder.Entity("Alura.Loja.TestesConsoleApp.Produto", b =>
                 {
@@ -37,6 +56,14 @@ namespace Alura.Loja.TestesConsoleApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Produtos");
+                });
+
+            modelBuilder.Entity("Alura.Loja.TestesConsoleApp.Compra", b =>
+                {
+                    b.HasOne("Alura.Loja.TestesConsoleApp.Produto", "Produto")
+                        .WithMany()
+                        .HasForeignKey("ProdutoId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

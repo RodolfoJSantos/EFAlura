@@ -126,11 +126,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compra.cs" />
     <Compile Include="IProdutoDao.cs" />
     <Compile Include="LojaContext.cs" />
-    <Compile Include="Migrations\20190910204401_Unidade.cs" />
-    <Compile Include="Migrations\20190910204401_Unidade.designer.cs">
-      <DependentUpon>20190910204401_Unidade.cs</DependentUpon>
+    <Compile Include="Migrations\20190910232453_Inicial.cs" />
+    <Compile Include="Migrations\20190910232453_Inicial.designer.cs">
+      <DependentUpon>20190910232453_Inicial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20190910232716_Unidade.cs" />
+    <Compile Include="Migrations\20190910232716_Unidade.designer.cs">
+      <DependentUpon>20190910232716_Unidade.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20190911012612_Compra.cs" />
+    <Compile Include="Migrations\20190911012612_Compra.designer.cs">
+      <DependentUpon>20190911012612_Compra.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\LojaContextModelSnapshot.cs" />
     <Compile Include="Produto.cs" />
@@ -142,6 +151,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
